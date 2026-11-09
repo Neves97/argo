@@ -1,4 +1,4 @@
-# Laboratório de Estudos: Argo no Kubernetes (k3d)
+# Argo no Kubernetes
 
 Estrutura inicial para estudar **Argo CD** (e demais ferramentas do ecossistema Argo) localmente usando **k3d**.
 
