@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cmd-params-cm  # a chave primaria é sempre aqui, não pode ser alterada. Embora o nome do arquivo em si não é relevante.
+  namespace: argocd
+data:
+  # Desativa o redirecionamento TLS interno do argocd-server para evitar loop com o Traefik Ingress
+  server.insecure: "true"
