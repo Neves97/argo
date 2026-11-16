@@ -1,0 +1,8 @@
+project: default
+source:
+  repoURL: https://github.com/Neves97/argocd-example-apps
+  path: guestbook
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: guestbook

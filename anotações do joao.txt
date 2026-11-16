@@ -1,9 +1,14 @@
-aqui me parece que foi feito um app of apps. config do argo, na pasta argo, e aplications no apps
+aqui me parece que foi feito um app of apps.>(não foi) config do argo, na pasta argo, e aplications no apps
 o agy tbm criou um k3d config.yaml pro proprio cluster, investigar isso. nao sabia que era possivel 
 	-> porra. que do caralho, o k3d dá pra guardar um yaml de configuraçãoe  aplicar usando 		k3d cluster create --config k3d-config.yaml. muito mais pratico 
 
 
 
 kustomize não tem icone bonitinho igual yaml dentro do argo, investigar o que o RA usa.
+ > ra um git com helm junto
 
 aqui nesse teste, tudo foi feito usando o padrão do k3d, mas seria legal uma hora aprender a usar o kong ingress controller.
+
+
+
+setup.ps1 fez o setup manual, tenho que fazer o lance de argocd autogerenciado
