@@ -1,13 +1,22 @@
-project: default
-source:
-  repoURL: https://github.com/Neves97/argocd-example-apps
-  path: guestbook
-  targetRevision: HEAD
-destination:
-  server: https://kubernetes.default.svc
-  namespace: guestbook
-syncPolicy:
-  syncOptions:
-    - CreateNamespace=true
-
-
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Neves97/argo.git
+    targetRevision: HEAD
+    path: manifests/guestbook
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: guestbook
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
