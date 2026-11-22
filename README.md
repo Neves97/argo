@@ -22,6 +22,7 @@ argo/
 └── manifests/                         <-- Os YAMLs reais de Kubernetes de cada app moram aqui!
     └── guestbook/
         ├── guestbook-ui-deployment.yaml
+        ├── guestbook-ui-ingress.yaml  <-- Expõe a app em http://guestbook.localhost:8080
         └── guestbook-ui-svc.yaml
 ```
 
@@ -58,6 +59,7 @@ Para não confundir o que cada arquivo faz, separe o repositório em **dois nív
 ## 🚀 Como Subir o Ambiente do Zero
 
 ### Opção A: Automática (via Script PowerShell)
+O script [`setup.ps1`](./setup.ps1) faz o bootstrap completo de ponta a ponta (cria o cluster k3d, instala o Argo CD, configura o Ingress HTTP, aplica o `root-app` e já exibe a senha do `admin` no terminal):
 ```powershell
 .\setup.ps1
 ```
@@ -99,6 +101,47 @@ A partir desse momento:
 1. O `root-app` aparece na UI do Argo CD.
 2. Ele lê a pasta `apps/` no GitHub, encontra o `guestbook-app.yaml` e cria automaticamente a aplicação `guestbook`.
 3. A aplicação `guestbook` lê a pasta `manifests/guestbook/` e sobe o `Deployment` e o `Service` no namespace `guestbook`.
+
+---
+
+## 🌐 Como Acessar as Aplicações (Ex: `guestbook`)
+
+Por padrão, o `Service` da aplicação `guestbook` ([`manifests/guestbook/guestbook-ui-svc.yaml`](./manifests/guestbook/guestbook-ui-svc.yaml)) é do tipo **`ClusterIP`** (acessível apenas de dentro do cluster). Você tem **duas formas** de acessá-la pelo navegador da sua máquina:
+
+### Opção 1: Acesso Rápido via `port-forward` (Sem alterar código)
+Ideal para um teste rápido local. Abra um terminal e rode:
+```powershell
+kubectl port-forward svc/guestbook-ui -n guestbook 8081:80
+```
+- **URL:** [http://localhost:8081](http://localhost:8081) *(enquanto o comando estiver rodando no terminal)*
+
+### Opção 2: Acesso Permanente via Traefik Ingress (Padrão GitOps ⭐)
+Como o cluster k3d já mapeia a porta `8080` do Windows para a porta `80` do LoadBalancer (Traefik), basta criar um arquivo **`manifests/guestbook/guestbook-ui-ingress.yaml`** exatamente como fizemos para o Argo CD:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook-ui-ingress
+  namespace: guestbook
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: guestbook.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: guestbook-ui
+                port:
+                  number: 80
+```
+Depois de salvar o arquivo, basta seguir o fluxo GitOps (`git add .`, `git commit`, `git push`). Assim que o Argo CD sincronizar, sua aplicação estará disponível permanentemente (sem precisar de `port-forward`) em:
+- **URL:** [http://guestbook.localhost:8080](http://guestbook.localhost:8080)
 
 ---
 
