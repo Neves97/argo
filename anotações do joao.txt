@@ -11,4 +11,6 @@ aqui nesse teste, tudo foi feito usando o padrão do k3d, mas seria legal uma ho
 
 
 
-setup.ps1 fez o setup manual, tenho que fazer o lance de argocd autogerenciado
+setup.ps1 fez o setup manual, 
+
+tenho que fazer o lance de argocd autogerenciado

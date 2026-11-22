@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webcolor-ui
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: webcolor-ui
+  template:
+    metadata:
+      labels:
+        app: webcolor-ui
+    spec:
+      containers:
+        - image: kubedevio/web-color:blue
+          name: webcolor-ui
+          ports:
+            - containerPort: 80

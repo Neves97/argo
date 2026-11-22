@@ -1,0 +1,22 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+metadata:
+  name: webcolor
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Neves97/argo.git
+    targetRevision: HEAD
+    path: manifests/webcolor
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: webcolor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
