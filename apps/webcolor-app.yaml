@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Neves97/argo.git
     targetRevision: HEAD
-    path: manifests/webcolor
+    path: manifests/kubedev-web-color
   destination:
     server: https://kubernetes.default.svc
     namespace: webcolor
