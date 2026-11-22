@@ -1,4 +1,4 @@
-# Argo no Kubernetes (k3d + GitOps App of Apps)
+# Laboratório de Estudos: Argo no Kubernetes (k3d)
 
 Estrutura para estudar **Argo CD** (e demais ferramentas do ecossistema Argo) localmente usando **k3d**, aplicando o padrão de mercado **App of Apps** (autogerenciamento via GitOps em repositório único).
 
