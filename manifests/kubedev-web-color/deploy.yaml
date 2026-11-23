@@ -14,7 +14,7 @@ spec:
         app: webcolor-ui
     spec:
       containers:
-        - image: kubedevio/web-color:green
+        - image: kubedevio/web-color:blue
           name: webcolor-ui
           ports:
             - containerPort: 80
